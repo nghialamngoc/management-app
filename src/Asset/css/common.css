@@ -1,0 +1,8 @@
+.navLink{
+  text-decoration: none;
+  color: black;
+}
+
+.navLink.active .MuiListItem-button{
+  background-color: #F5F5F5;
+}
