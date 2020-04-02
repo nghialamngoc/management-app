@@ -27,11 +27,7 @@ export default function SimpleSelect(props) {
   const initialSetting = props.setting.initialSetting;
   // generate html for select list
   var htmlForSelect = null;
-  if( initialSetting !== null &&
-    initialSetting !== undefined &&
-    initialSetting.listItem !== null &&
-    initialSetting.listItem !== undefined && 
-    initialSetting.listItem.length > 0 ){
+  if( Array.isArray(initialSetting.listItem) && initialSetting.listItem.length > 0 ){
     if( initialSetting.isGroup === false ){
       htmlForSelect = initialSetting.listItem.map((item, i) => {
         return <MenuItem key={i} value={item.value}>{item.display}</MenuItem>

@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import Select from './Select';
 import { Grid, makeStyles } from '@material-ui/core';
+import MultipleCheckbox from './MultipleCheckbox';
 
 const useStyles = makeStyles(theme => ({
   center: {
@@ -8,6 +9,13 @@ const useStyles = makeStyles(theme => ({
     alignItems: "center"
   },
 }));
+
+const initialMultipleSelectCheckbox = {
+  GET: true,
+  POST: true,
+  PUT: true,
+  DELETE: true
+}
 
 export default function FilterCritiria(props){
   const classes = useStyles();
@@ -30,6 +38,9 @@ export default function FilterCritiria(props){
         </Grid>
         <Grid item xs={12} sm={5} md={4} lg={2} className={classes.center}>
           <p>{ domainDes }</p>
+        </Grid>
+        <Grid item xs={12} className={classes.center}>
+          <MultipleCheckbox initial={initialMultipleSelectCheckbox}></MultipleCheckbox>
         </Grid>
       </Grid>
     </React.Fragment>
