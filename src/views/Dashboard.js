@@ -8,6 +8,18 @@ import Container from '@material-ui/core/Container';
 import Grid from '@material-ui/core/Grid';
 import Link from '@material-ui/core/Link';
 import Menu from '../components/Dashboard/Menu';
+import { createMuiTheme } from '@material-ui/core/styles';
+import blue from '@material-ui/core/colors/blue';
+import { MuiThemeProvider } from '@material-ui/core/styles';
+
+const theme = createMuiTheme({
+  palette: {
+    primary: blue,
+    secondary: {
+      main: '#53bff3',
+    },
+  },
+});
 
 // View Component
 const AboutViewContent = lazy(() => import('./About'));
@@ -60,27 +72,29 @@ const useStyles = makeStyles(theme => ({
 export default function Dashboard() {
   const classes = useStyles();
   return (
-    <div className={classes.root}>
-      <CssBaseline />
-      <Router>
-        <Menu></Menu>
-        <main className={classes.content}>
-          <div className={classes.appBarSpacer} />
-          <Container maxWidth="xl" className={classes.container}>
-            <Grid container spacing={3}>
-              <Suspense fallback={<div>Loading...</div>}>
-                <Switch>
-                  <Route exact path="/" component={ApiManagementViewContent}></Route>
-                  <Route path="/about" component={AboutViewContent}></Route>
-                </Switch>
-              </Suspense>
-            </Grid>
-            <Box pt={4} className={classes.footer}>
-              <Copyright />
-            </Box>
-          </Container>
-        </main>
-      </Router>
-    </div>
+    <MuiThemeProvider theme={theme}>
+      <div className={classes.root}>
+        <CssBaseline />
+        <Router>
+          <Menu></Menu>
+          <main className={classes.content}>
+            <div className={classes.appBarSpacer} />
+            <Container maxWidth="xl" className={classes.container}>
+              <Grid container spacing={3}>
+                <Suspense fallback={<div>Loading...</div>}>
+                  <Switch>
+                    <Route exact path="/" component={ApiManagementViewContent}></Route>
+                    <Route path="/about" component={AboutViewContent}></Route>
+                  </Switch>
+                </Suspense>
+              </Grid>
+              <Box pt={4} className={classes.footer}>
+                <Copyright />
+              </Box>
+            </Container>
+          </main>
+        </Router>
+      </div>
+    </MuiThemeProvider>
   );
 }

@@ -13,18 +13,19 @@ const useStyles = makeStyles(theme => ({
   },
   selectEmpty: {
     marginTop: theme.spacing(2),
-  },
+  }
 }));
 
 export default function SimpleSelect(props) {
   const classes = useStyles();
-  const [selectedValue, setSelectedValue] = React.useState('');
+  // Declare reference variable
+  const initialSetting = props.setting.initialSetting;
+  const [selectedValue, setSelectedValue] = React.useState(initialSetting.listItem[0].value);
 
   const handleChange = event => {
     setSelectedValue(event.target.value);
     props.setting.onChange(event.target.value);
   };
-  const initialSetting = props.setting.initialSetting;
   // generate html for select list
   var htmlForSelect = null;
   if( Array.isArray(initialSetting.listItem) && initialSetting.listItem.length > 0 ){
@@ -44,9 +45,6 @@ export default function SimpleSelect(props) {
           value={selectedValue}
           onChange={handleChange}
         >
-          <MenuItem value="">
-            <em>None</em>
-          </MenuItem>
           {htmlForSelect}
         </Select>
         <FormHelperText>{initialSetting.helpText}</FormHelperText>
