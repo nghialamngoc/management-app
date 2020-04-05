@@ -1,0 +1,125 @@
+import React, { useState } from 'react';
+import { makeStyles } from '@material-ui/core/styles';
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableContainer from '@material-ui/core/TableContainer';
+import TableHead from '@material-ui/core/TableHead';
+import TableRow from '@material-ui/core/TableRow';
+import Skeleton from '@material-ui/lab/Skeleton';
+import Toolbar from '@material-ui/core/Toolbar';
+import Typography from '@material-ui/core/Typography';
+import Tooltip from '@material-ui/core/Tooltip';
+import IconButton from '@material-ui/core/IconButton';
+import FilterListIcon from '@material-ui/icons/FilterList';
+import TablePagination from '@material-ui/core/TablePagination';
+
+const useStyles = makeStyles({
+  root: {
+    paddingLeft: "10px"
+  },
+  table: {
+    minWidth: 650,
+  },
+  title: {
+    flex: '1 1 100%',
+    fontWeight: "600",
+    color: "#3785e6"
+  },
+});
+
+function createData(url, des, method) {
+  return { url, des, method };
+}
+
+const rows = [
+  createData('https://material-ui.com/components/tables/#table', 'Api upload article', 'GET'),
+  createData('https://material-ui.com/components/tables/#table', 'Api upload article', 'POST'),
+  createData('https://material-ui.com/components/tables/#table', 'Api upload article', 'PUT'),
+  createData('https://material-ui.com/components/tables/#table', 'Api upload article', 'GET'),
+  createData('https://material-ui.com/components/tables/#table', 'Api upload article', 'POST'),
+  createData('https://material-ui.com/components/tables/#table', 'Api upload article', 'PUT'),
+  createData('https://material-ui.com/components/tables/#table', 'Api upload article', 'GET'),
+  createData('https://material-ui.com/components/tables/#table', 'Api upload article', 'POST'),
+  createData('https://material-ui.com/components/tables/#table', 'Api upload article', 'PUT'),
+];
+
+export default function SimpleTable() {
+  const classes = useStyles();
+  // Define state
+  const [loading, setLoading] = useState(true);
+  const [rowsPerPage] = React.useState(5);
+  const [data, setData] = useState([])
+  const [page, setPage] = React.useState(0);
+  // TODO: delete
+  function dummy() {
+    setLoading(false);
+    setData(rows);
+  }
+
+  setTimeout(() => {
+    dummy();
+  }, 2000);
+  //---------------------
+  
+  const handleChangePage = (event, newPage) => {
+    setPage(newPage);
+  };
+
+  return (
+    <React.Fragment>
+      <Toolbar className={classes.root}>
+        <Typography className={classes.title} variant="h6" id="tableTitle" component="div">
+          API List
+        </Typography>
+        <Tooltip title="Filter list">
+          <IconButton aria-label="filter list">
+            <FilterListIcon />
+          </IconButton>
+        </Tooltip>
+      </Toolbar>
+      <TableContainer>
+        <Table className={classes.table} aria-label="simple table">
+          <TableHead>
+            <TableRow>
+              <TableCell style={{ fontWeight: 600 }}>Api url</TableCell>
+              <TableCell style={{ fontWeight: 600 }} align="left">Description</TableCell>
+              <TableCell style={{ fontWeight: 600 }} align="left">Method</TableCell>
+              <TableCell style={{ fontWeight: 600 }} align="right">Options</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {loading ? Array.from(new Array(3)).map((row, index) => {
+              return <TableRow key={index}>
+                <TableCell component="th" scope="row">
+                  <Skeleton />
+                </TableCell>
+                <TableCell align="left"><Skeleton /></TableCell>
+                <TableCell align="left"><Skeleton /></TableCell>
+                <TableCell align="right"><Skeleton /></TableCell>
+              </TableRow>
+            }) :
+              data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row, index) => (
+                <TableRow key={index}>
+                  <TableCell component="th" scope="row">
+                    {row.url}
+                  </TableCell>
+                  <TableCell align="left">{row.des}</TableCell>
+                  <TableCell align="left">{row.method}</TableCell>
+                  <TableCell align="right">{row.protein}</TableCell>
+                </TableRow>
+              ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+      <TablePagination
+        rowsPerPageOptions={[5]}
+        component="div"
+        count={data.length}
+        rowsPerPage={rowsPerPage}
+        page={page}
+        onChangePage={handleChangePage}
+      />
+    </React.Fragment>
+  );
+}

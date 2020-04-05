@@ -21,7 +21,10 @@ export default function CheckboxesGroup(props) {
   const [state, setState] = React.useState(props.initial);
 
   const handleChange = (event) => {
-    setState({ ...state, [event.target.name]: event.target.checked });
+    const changeValue = { ...state, [event.target.name]: event.target.checked };
+    setState(changeValue);
+    // emit event change
+    props.onChange(changeValue);
   };
   // Error check
   var error = Object.getOwnPropertyNames(state).filter((v) => state[v]).length < 1;
