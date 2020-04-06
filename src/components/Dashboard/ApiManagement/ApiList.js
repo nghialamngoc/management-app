@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -12,7 +12,10 @@ import Typography from '@material-ui/core/Typography';
 import Tooltip from '@material-ui/core/Tooltip';
 import IconButton from '@material-ui/core/IconButton';
 import FilterListIcon from '@material-ui/icons/FilterList';
+import EditIcon from '@material-ui/icons/Edit'
 import TablePagination from '@material-ui/core/TablePagination';
+import Box from '@material-ui/core/Box';
+import Popover from '@material-ui/core/Popover';
 
 const useStyles = makeStyles({
   root: {
@@ -51,21 +54,60 @@ export default function SimpleTable() {
   const [rowsPerPage] = React.useState(5);
   const [data, setData] = useState([])
   const [page, setPage] = React.useState(0);
+  //-----------------
+  const handleClick = (event, index) => {
+    if (index >= 0) {
+      var newData = data.map((item, i) => {
+        if (i === index) {
+          item.openEditState = {
+            isOpen: true,
+            id: 'simple-popover',
+            anchorEl: event.currentTarget
+          };
+        }
+        return item;
+      });
+      setData(newData);
+    }
+  };
+  const handleClose = () => {
+    const newData = data.map(item => {
+      item.openEditState = {
+        isOpen: false,
+        id: undefined,
+        anchorEl: null
+      }
+      return item;
+    });
+    setData(newData);
+  };
+  //-----------------
   // TODO: delete
   function dummy() {
     setLoading(false);
+    rows.map(item => {
+      item.openEditState = {
+        isOpen: false,
+        id: undefined,
+        anchorEl: null
+      }
+      return item;
+    });
     setData(rows);
   }
-
-  setTimeout(() => {
-    dummy();
-  }, 2000);
+  useEffect(() => {
+    setTimeout(() => {
+      dummy();
+    }, 2000);
+  }, [])
   //---------------------
-  
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
   };
 
+  const handleEditButton = function (data) {
+    console.log(data);
+  };
   return (
     <React.Fragment>
       <Toolbar className={classes.root}>
@@ -99,14 +141,36 @@ export default function SimpleTable() {
                 <TableCell align="right"><Skeleton /></TableCell>
               </TableRow>
             }) :
-              data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row, index) => (
+              data.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((data, index) => (
                 <TableRow key={index}>
                   <TableCell component="th" scope="row">
-                    {row.url}
+                    {data.url}
                   </TableCell>
-                  <TableCell align="left">{row.des}</TableCell>
-                  <TableCell align="left">{row.method}</TableCell>
-                  <TableCell align="right">{row.protein}</TableCell>
+                  <TableCell align="left">{data.des}</TableCell>
+                  <TableCell align="left">{data.method}</TableCell>
+                  <TableCell align="right">
+                    <IconButton color="primary" component="span" style={{ padding: "0 10px" }} onClick={(event) => handleClick(event, index)}>
+                      <EditIcon></EditIcon>
+                    </IconButton>
+                    <Popover
+                      id={data.openEditState.isOpen ? 'simple-popover' : undefined}
+                      open={data.openEditState.isOpen}
+                      anchorEl={data.openEditState.anchorEl}
+                      onClose={handleClose}
+                      anchorOrigin={{
+                        vertical: 'bottom',
+                        horizontal: 'left',
+                      }}
+                      transformOrigin={{
+                        vertical: 'bottom',
+                        horizontal: 'right',
+                      }}
+                    >
+                      <Box p={2}>
+                        <Typography>The content of the Popover.</Typography>
+                      </Box>
+                    </Popover>
+                  </TableCell>
                 </TableRow>
               ))}
           </TableBody>
