@@ -14,8 +14,8 @@ import IconButton from '@material-ui/core/IconButton';
 import FilterListIcon from '@material-ui/icons/FilterList';
 import EditIcon from '@material-ui/icons/Edit'
 import TablePagination from '@material-ui/core/TablePagination';
-import Box from '@material-ui/core/Box';
 import Popover from '@material-ui/core/Popover';
+import ApiEditComponent from './ApiEdit';
 
 const useStyles = makeStyles({
   root: {
@@ -31,20 +31,20 @@ const useStyles = makeStyles({
   },
 });
 
-function createData(url, des, method) {
-  return { url, des, method };
+function createData(url, des, method, input) {
+  return { url, des, method, input };
 }
 
 const rows = [
-  createData('https://material-ui.com/components/tables/#table', 'Api upload article', 'GET'),
-  createData('https://material-ui.com/components/tables/#table', 'Api upload article', 'POST'),
-  createData('https://material-ui.com/components/tables/#table', 'Api upload article', 'PUT'),
-  createData('https://material-ui.com/components/tables/#table', 'Api upload article', 'GET'),
-  createData('https://material-ui.com/components/tables/#table', 'Api upload article', 'POST'),
-  createData('https://material-ui.com/components/tables/#table', 'Api upload article', 'PUT'),
-  createData('https://material-ui.com/components/tables/#table', 'Api upload article', 'GET'),
-  createData('https://material-ui.com/components/tables/#table', 'Api upload article', 'POST'),
-  createData('https://material-ui.com/components/tables/#table', 'Api upload article', 'PUT'),
+  createData('https://material-ui.com/components/tables/#table', 'Api upload article', 'GET', null),
+  createData('https://material-ui.com/components/tables/#table', 'Api upload article', 'POST', { imageBlobData: "Blob data" }),
+  createData('https://material-ui.com/components/tables/#table', 'Api upload article', 'PUT',  { id: "string" }),
+  createData('https://material-ui.com/components/tables/#table', 'Api upload article', 'GET', null),
+  createData('https://material-ui.com/components/tables/#table', 'Api upload article', 'POST', null),
+  createData('https://material-ui.com/components/tables/#table', 'Api upload article', 'PUT', null),
+  createData('https://material-ui.com/components/tables/#table', 'Api upload article', 'GET', null),
+  createData('https://material-ui.com/components/tables/#table', 'Api upload article', 'POST', null),
+  createData('https://material-ui.com/components/tables/#table', 'Api upload article', 'PUT', null),
 ];
 
 export default function SimpleTable() {
@@ -166,9 +166,7 @@ export default function SimpleTable() {
                         horizontal: 'right',
                       }}
                     >
-                      <Box p={2}>
-                        <Typography>The content of the Popover.</Typography>
-                      </Box>
+                      <ApiEditComponent data={data}></ApiEditComponent>
                     </Popover>
                   </TableCell>
                 </TableRow>
