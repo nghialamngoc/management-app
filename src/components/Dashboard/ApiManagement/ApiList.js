@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -11,7 +12,8 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import Tooltip from '@material-ui/core/Tooltip';
 import IconButton from '@material-ui/core/IconButton';
-import FilterListIcon from '@material-ui/icons/FilterList';
+import PlaylistAddIcon from '@material-ui/icons/PlaylistAdd';
+import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 import EditIcon from '@material-ui/icons/Edit'
 import TablePagination from '@material-ui/core/TablePagination';
 import Popover from '@material-ui/core/Popover';
@@ -35,6 +37,7 @@ function createData(url, des, method, input) {
   return { url, des, method, input };
 }
 
+// TODO: remove dummy data
 const rows = [
   createData('https://material-ui.com/components/tables/#table', 'Api upload article', 'GET', null),
   createData('https://material-ui.com/components/tables/#table', 'Api upload article', 'POST', { imageBlobData: "Blob data" }),
@@ -47,7 +50,17 @@ const rows = [
   createData('https://material-ui.com/components/tables/#table', 'Api upload article', 'PUT', null),
 ];
 
-export default function SimpleTable() {
+ApiList.propTypes = {
+  selectedDomain: PropTypes.string,
+  selectedMethod: PropTypes.object
+}
+
+ApiList.defaultProps = {
+
+}
+
+export default function ApiList(props) {
+  console.log(props.filter);
   const classes = useStyles();
   // Define state
   const [loading, setLoading] = useState(true);
@@ -96,10 +109,11 @@ export default function SimpleTable() {
     setData(rows);
   }
   useEffect(() => {
+    console.log('call')
     setTimeout(() => {
       dummy();
     }, 2000);
-  }, [])
+  }, [props.filter])
   //---------------------
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -114,9 +128,9 @@ export default function SimpleTable() {
         <Typography className={classes.title} variant="h6" id="tableTitle" component="div">
           API List
         </Typography>
-        <Tooltip title="Filter list">
-          <IconButton aria-label="filter list">
-            <FilterListIcon />
+        <Tooltip title="Add">
+          <IconButton aria-label="Add" size="medium">
+            <PlaylistAddIcon />
           </IconButton>
         </Tooltip>
       </Toolbar>
@@ -149,8 +163,11 @@ export default function SimpleTable() {
                   <TableCell align="left">{data.des}</TableCell>
                   <TableCell align="left">{data.method}</TableCell>
                   <TableCell align="right">
-                    <IconButton color="primary" component="span" style={{ padding: "0 10px" }} onClick={(event) => handleClick(event, index)}>
-                      <EditIcon></EditIcon>
+                    <IconButton component="span" style={{ padding: "0 10px" }} onClick={(event) => handleClick(event, index)}>
+                      <EditIcon color="primary"></EditIcon>
+                    </IconButton>
+                    <IconButton component="span" style={{ padding: "0 5px" }} onClick={(event) => handleClick(event, index)}>
+                      <DeleteForeverIcon></DeleteForeverIcon>
                     </IconButton>
                     <Popover
                       id={data.openEditState.isOpen ? 'simple-popover' : undefined}
@@ -166,7 +183,7 @@ export default function SimpleTable() {
                         horizontal: 'right',
                       }}
                     >
-                      <ApiEditComponent data={data}></ApiEditComponent>
+                      <ApiEditComponent data={data} onSubmit={handleEditButton}></ApiEditComponent>
                     </Popover>
                   </TableCell>
                 </TableRow>

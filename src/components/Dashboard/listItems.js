@@ -4,7 +4,7 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import DashboardIcon from '@material-ui/icons/Dashboard';
-import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
+import GestureIcon from '@material-ui/icons/Gesture';
 import PeopleIcon from '@material-ui/icons/People';
 import BarChartIcon from '@material-ui/icons/BarChart';
 import LayersIcon from '@material-ui/icons/Layers';
@@ -19,12 +19,14 @@ export const mainListItems = (
         <ListItemText primary="Api Management" />
       </ListItem>
     </NavLink>
-    <ListItem button>
-      <ListItemIcon>
-        <ShoppingCartIcon />
-      </ListItemIcon>
-      <ListItemText primary="Orders" />
-    </ListItem>
+    <NavLink to="/css-practice" exact className="navLink">
+      <ListItem button>
+        <ListItemIcon>
+          <GestureIcon />
+        </ListItemIcon>
+        <ListItemText primary="CSS Practice" />
+      </ListItem>
+    </NavLink>
     <ListItem button>
       <ListItemIcon>
         <PeopleIcon />

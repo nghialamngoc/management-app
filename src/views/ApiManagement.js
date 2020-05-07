@@ -19,21 +19,23 @@ const useStyles = makeStyles(theme => ({
 
 export default function ApiManagement(){
   const classes = useStyles();
-  const [ filter, setFilter ] = useState({});
+  const [ filter, setFilter ] = useState({
+    selectedDomain: "sharingandlearning",
+    selectedMethod: {GET: true, POST: true, PUT: true, DELETE: true}
+  });
   function onChangeFilter(data){
-    console.log(data);
-    setFilter(data);
+    setFilter({...filter, ...data});
   };
   return(
     <div className={classes.root}>
-      <Grid container spacing={3}>
+      <Grid container>
         <Grid item xs={12} lg={9}>
           <Paper className={classes.paper}>
             <FilterCritiria onSearch={onChangeFilter}></FilterCritiria>
           </Paper>
           <Divider></Divider>
-          <Paper className={classes.paper} style={{marginTop: "10px"}}>
-            <ApiList></ApiList>
+          <Paper className={classes.paper} style={{marginTop: "10px"}} >
+            <ApiList filter={{...filter}}></ApiList>
           </Paper>
         </Grid>
       </Grid>

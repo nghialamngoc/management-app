@@ -106,18 +106,18 @@ export default function FilterCritiria(props) {
   return (
     <React.Fragment>
       <Grid container>
-        <Grid item xs={12} sm={5} md={3} lg={3}>
+        <Grid item xs={12} sm={4} md={3} lg={3}>
           <Select setting={{ initialSetting: domainSelectListItems, onChange: onSelectChange }}></Select>
         </Grid>
-        <Grid item xs={12} sm={5} md={5} lg={7} className={classes.center}>
+        <Grid item xs={12} sm={6} md={5} lg={7} className={classes.center}>
           <p className={classes.text}>{domainDes}</p>
         </Grid>
-        <Grid item xs={12} sm={2} md={2} lg={1} className={classes.center}>
+        <Grid item xs={12} sm={1} md={2} lg={1} className={classes.center}>
           <Button variant="contained" color="primary" disableElevation onClick={onSearch}>
             Search
           </Button>
         </Grid>
-        <Grid item xs={12} sm={2} md={2} lg={1} className={classes.center} style={{ justifyContent: "flex-end" }}>
+        <Grid item xs={12} sm={1} md={2} lg={1} className={classes.center} style={{ justifyContent: "flex-end" }}>
           <Button className={classes.advancedSearchButton} onClick={onButtonExpandChange} disableRipple>
             {isExpanded === true ? <ExpandMore></ExpandMore> : <ExpandLess></ExpandLess>}
           </Button>

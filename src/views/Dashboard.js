@@ -23,6 +23,7 @@ const theme = createMuiTheme({
 
 // View Component
 const AboutViewContent = lazy(() => import('./About'));
+const CssPracticeViewContent = lazy(() => import('./CssPractice'));
 const ApiManagementViewContent = lazy(() => import('./ApiManagement'));
 
 function Copyright() {
@@ -49,8 +50,9 @@ const useStyles = makeStyles(theme => ({
     overflow: 'auto',
   },
   container: {
-    paddingTop: theme.spacing(4),
-    paddingBottom: theme.spacing(4),
+    padding: '0',
+    background: '#131417',
+    minHeight: '90vh',
   },
   paper: {
     padding: theme.spacing(2),
@@ -80,10 +82,11 @@ export default function Dashboard() {
           <main className={classes.content}>
             <div className={classes.appBarSpacer} />
             <Container maxWidth="xl" className={classes.container}>
-              <Grid container spacing={3}>
+              <Grid container>
                 <Suspense fallback={<div>Loading...</div>}>
                   <Switch>
                     <Route exact path="/" component={ApiManagementViewContent}></Route>
+                    <Route path="/css-practice" component={CssPracticeViewContent}></Route>
                     <Route path="/about" component={AboutViewContent}></Route>
                   </Switch>
                 </Suspense>
