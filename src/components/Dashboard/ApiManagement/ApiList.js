@@ -60,7 +60,6 @@ ApiList.defaultProps = {
 }
 
 export default function ApiList(props) {
-  console.log(props.filter);
   const classes = useStyles();
   // Define state
   const [loading, setLoading] = useState(true);
@@ -109,7 +108,6 @@ export default function ApiList(props) {
     setData(rows);
   }
   useEffect(() => {
-    console.log('call')
     setTimeout(() => {
       dummy();
     }, 2000);

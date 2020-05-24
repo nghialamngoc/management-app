@@ -5,9 +5,9 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import DashboardIcon from '@material-ui/icons/Dashboard';
 import GestureIcon from '@material-ui/icons/Gesture';
-import PeopleIcon from '@material-ui/icons/People';
 import BarChartIcon from '@material-ui/icons/BarChart';
 import LayersIcon from '@material-ui/icons/Layers';
+import EqualizerIcon from '@material-ui/icons/Equalizer';
 
 export const mainListItems = (
   <div>
@@ -27,12 +27,14 @@ export const mainListItems = (
         <ListItemText primary="CSS Practice" />
       </ListItem>
     </NavLink>
-    <ListItem button>
-      <ListItemIcon>
-        <PeopleIcon />
-      </ListItemIcon>
-      <ListItemText primary="Customers" />
-    </ListItem>
+    <NavLink to="/multiple-chart-demo" exact className="navLink">
+      <ListItem button>
+        <ListItemIcon>
+          <EqualizerIcon />
+        </ListItemIcon>
+        <ListItemText primary="Chart Demo" />
+      </ListItem>
+    </NavLink>
     <ListItem button>
       <ListItemIcon>
         <BarChartIcon />

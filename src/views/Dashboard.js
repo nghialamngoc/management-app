@@ -25,6 +25,7 @@ const theme = createMuiTheme({
 const AboutViewContent = lazy(() => import('./About'));
 const CssPracticeViewContent = lazy(() => import('./CssPractice'));
 const ApiManagementViewContent = lazy(() => import('./ApiManagement'));
+const MultibleChartViewContent = lazy(() => import('./MultipleChart'));
 
 function Copyright() {
   return (
@@ -51,7 +52,7 @@ const useStyles = makeStyles(theme => ({
   },
   container: {
     padding: '0',
-    background: '#131417',
+    //background: '#131417',
     minHeight: '90vh',
   },
   paper: {
@@ -88,6 +89,7 @@ export default function Dashboard() {
                     <Route exact path="/" component={ApiManagementViewContent}></Route>
                     <Route path="/css-practice" component={CssPracticeViewContent}></Route>
                     <Route path="/about" component={AboutViewContent}></Route>
+                    <Route path="/multiple-chart-demo" component={MultibleChartViewContent}></Route>
                   </Switch>
                 </Suspense>
               </Grid>
